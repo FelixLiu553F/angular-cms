@@ -1,0 +1,18 @@
+<nz-select
+  #select
+  [ngModel]="selectedValues"
+  (ngModelChange)="onSelectedValuesChanged($event)"
+  (nzBlur)="isVisible = false"
+  nzPlaceHolder="{{ placeholder }}"
+  (nzFocus)="openDropdown(select)"
+>
+  <nz-option style="color: red;" *ngIf="isShowSelectAll" [nzValue]="'selectAll'"
+    >Select All</nz-option
+  >
+  <nz-option
+    *ngFor="let option of selectOptions"
+    [nzValue]="option.value"
+    [nzLabel]="option.label"
+    >{{ option.label }}</nz-option
+  >
+</nz-select>

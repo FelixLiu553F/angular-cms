@@ -1,0 +1,26 @@
+<div class="f-click-card">
+    <nz-card *ngIf="isCardVisible" [nzCover]="coverTemplate" [nzActions]="[actionSetting, actionEdit, actionEllipsis]"
+        [nzHoverable]="true" (click)="onCardClick($event)">
+        <nz-card-meta [nzTitle]="employee?.accountName!" [nzDescription]="employee?.position?.title!"
+            [nzAvatar]="avatarTemplate"></nz-card-meta>
+    </nz-card>
+    <ng-template #avatarTemplate>
+        <f-avatar [imagePath]="employee?.avatar!" [accountName]="employee?.accountName!"></f-avatar>
+    </ng-template>
+    <ng-template #coverTemplate>
+        <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+    </ng-template>
+    <ng-template #actionSetting>
+        <span (click)="onInfo()">
+            <i class="fa fa-address-card-o" aria-hidden="true"></i>
+        </span>
+    </ng-template>
+    <ng-template #actionEdit>
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #actionEllipsis>
+        <span (click)="logout()">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+        </span>
+    </ng-template>
+</div>

@@ -1,0 +1,25 @@
+::ng-deep .ant-divider-horizontal {
+    margin: 0;
+    background-color: rgba(0, 0, 0, .16);
+    margin-bottom: 10px;
+}
+
+.vertical {
+    margin: 0 auto;
+    width: 1px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, .16);
+    height: 20px;
+}
+
+.list-cards {
+    margin: 0 auto;
+    width: 960px;
+}
+
+.item-card {
+    float: left;
+    margin: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 0px;
+}

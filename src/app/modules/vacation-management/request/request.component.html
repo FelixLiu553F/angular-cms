@@ -1,0 +1,212 @@
+<form nz-form (ngSubmit)="submitForm()" [formGroup]="validateForm" class="form" *ngIf="validateForm">
+  <div nz-row>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired>假期类型</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-select
+            id="select-position"
+            nzAllowClear
+            nzShowSearch
+            nzServerSearch
+            [nzOptionOverflowSize]="5"
+            formControlName="typeId"
+            (nzOpenChange)="listOfVacationType.onSearch($event)"
+          >
+            <ng-container *ngFor="let o of listOfVacationType.items">
+              <nz-option
+                *ngIf="!listOfVacationType.isLoading"
+                [nzValue]="o.id"
+                [nzLabel]="o.name!"
+              ></nz-option>
+            </ng-container>
+            <nz-option
+              *ngIf="listOfVacationType.isLoading"
+              nzDisabled
+              nzCustomContent
+            >
+              <span nz-icon nzType="loading" class="loading-icon"></span>
+              Loading Data...
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired>请假时长</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-input-group nzSuffix="小时">
+            <input type="text" nz-input formControlName="operateTimes" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired>请假原因</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <textarea nz-input formControlName="reason"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">CC(separated by ";")</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <textarea nz-input rows="4" formControlName="carbonCopy" formControlName="cc"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired>开始时间</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-date-picker
+            [nzDisabledDate]="disabledStartDate"
+            nzShowTime
+            nzFormat="yyyy-MM-dd HH:mm"
+            formControlName="startDate"
+            (nzOnOpenChange)="handleStartOpenChange($event)"
+            [nzShowTime]="{ nzFormat: 'HH:mm', nzMinuteStep: 30 }"
+          >
+          </nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired>结束时间</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-date-picker
+            #endDatePicker
+            [nzDisabledDate]="disabledEndDate"
+            nzShowTime
+            nzFormat="yyyy-MM-dd HH:mm"
+            formControlName="endDate"
+            (nzOnOpenChange)="handleEndOpenChange($event)"
+            [nzShowTime]="{ nzFormat: 'HH:mm', nzMinuteStep: 30 }"
+          >
+          </nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">申请材料</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-upload
+            class="avatar-uploader"
+            nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            nzName="avatar"
+            nzListType="picture-card"
+            [nzShowUploadList]="false"
+            [nzBeforeUpload]="beforeUpload"
+            (nzChange)="handleChange($event)"
+          >
+            <ng-container *ngIf="!avatarUrl">
+              <span
+                class="upload-icon"
+                nz-icon
+                [nzType]="loading ? 'loading' : 'plus'"
+              ></span>
+              <div class="ant-upload-text">Upload</div>
+            </ng-container>
+            <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+          </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">优先扣除OT假</nz-form-label>
+        <nz-form-control [nzSpan]="10" nzOffset="1">
+          <nz-switch formControlName="isOTChiefly" nzSize="small"></nz-switch>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">剩余休假时长</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <button
+            nz-button
+            nzType="text"
+            nz-popover
+            [nzPopoverContent]="contentTemplate"
+            nzPopoverPlacement="bottom"
+          >
+            {{
+              info.operateLastYearRemainingTimes! +
+                info.operateRemainingTimes! +
+                info.operateOTRemainingTimes!
+            }}
+          </button>
+          <ng-template #contentTemplate>
+            <div nz-row class="popover-row">
+              <div nz-col nzSpan="20">去年剩余年假&nbsp;:</div>
+              <div nz-col nzSpan="2" nzOffset="2">
+                {{ info.operateLastYearRemainingTimes }}
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col nzSpan="20">今年剩余年假&nbsp;:</div>
+              <div nz-col nzSpan="2" nzOffset="2">
+                {{ info.operateRemainingTimes }}
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col nzSpan="20">剩余OT假期&nbsp;:</div>
+              <div nz-col nzSpan="2" nzOffset="2">
+                {{ info.operateOTRemainingTimes }}
+              </div>
+            </div>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">To Leader</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          {{ info.manager?.email }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">To HR</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          {{ emailForHR }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzJustify="end">
+    <div nz-col [nzSpan]="6" class="search-area">
+      <nz-space>
+        <button
+          *nzSpaceItem
+          nz-button
+          type="submit"
+          nzType="primary"
+          [disabled]="
+            vacation?.status != VacationStatusStatus.New && !!vacation
+          "
+        >
+          <span nz-icon nzType="check" nzTheme="outline"></span>提交
+        </button>
+        <button
+          *nzSpaceItem
+          nz-button
+          type="button"
+          nzType="primary"
+          (click)="SaveForm()"
+          [disabled]="
+            vacation?.status != VacationStatusStatus.New && !!vacation
+          "
+        >
+          <span nz-icon nzType="save" nzTheme="outline"></span>保存
+        </button>
+        <button
+          *nzSpaceItem
+          nz-button
+          type="button"
+          nzType="primary"
+          (click)="resetForm()"
+          nzDanger
+        >
+          <span nz-icon nzType="close" nzTheme="outline"></span>取消
+        </button>
+      </nz-space>
+    </div>
+  </div>
+</form>

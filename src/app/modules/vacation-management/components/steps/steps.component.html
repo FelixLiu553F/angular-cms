@@ -1,0 +1,20 @@
+<nz-steps *ngIf="status == VacationStatusStatus.New">
+    <nz-step [nzTitle]="VacationStatusStatus.New" nzStatus="finish" nzIcon="save"></nz-step>
+    <nz-step [nzTitle]="VacationStatusStatus.Submitted" nzStatus="process" nzIcon="loading"></nz-step>
+    <nz-step nzTitle="审批" nzStatus="wait" nzIcon="audit"></nz-step>
+</nz-steps>
+<nz-steps *ngIf="status == VacationStatusStatus.Submitted">
+    <nz-step [nzTitle]="VacationStatusStatus.New" nzStatus="finish" nzIcon="save"></nz-step>
+    <nz-step [nzTitle]="VacationStatusStatus.Submitted" nzStatus="finish" nzIcon="solution"></nz-step>
+    <nz-step nzTitle="审批" nzStatus="process" nzIcon="loading"></nz-step>
+</nz-steps>
+<nz-steps *ngIf="status == VacationStatusStatus.Approved">
+    <nz-step [nzTitle]="VacationStatusStatus.New" nzStatus="finish" nzIcon="save"></nz-step>
+    <nz-step [nzTitle]="VacationStatusStatus.Submitted" nzStatus="finish" nzIcon="solution"></nz-step>
+    <nz-step [nzTitle]="VacationStatusStatus.Approved" nzStatus="finish" nzIcon="check-square"></nz-step>
+</nz-steps>
+<nz-steps *ngIf="status == VacationStatusStatus.Rejected">
+    <nz-step [nzTitle]="VacationStatusStatus.New" nzStatus="finish" nzIcon="save"></nz-step>
+    <nz-step [nzTitle]="VacationStatusStatus.Submitted" nzStatus="finish" nzIcon="solution"></nz-step>
+    <nz-step [nzTitle]="VacationStatusStatus.Rejected" nzStatus="finish" nzIcon="close-square"></nz-step>
+</nz-steps>

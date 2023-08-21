@@ -1,0 +1,102 @@
+<form nz-form (ngSubmit)="submitForm()" [formGroup]="validateForm" class="form">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzRequired>任务名称</nz-form-label>
+    <nz-form-control [nzSpan]="14" [nzOffset]="1">
+      <input
+        nz-input
+        placeholder="Task Name"
+        formControlName="name"
+        class="input-item"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzRequired>开始时间</nz-form-label>
+    <nz-form-control [nzSpan]="14" [nzOffset]="1">
+      <nz-date-picker
+        [nzDisabledDate]="disabledStartDate"
+        nzShowTime
+        nzFormat="yyyy-MM-dd HH:mm"
+        formControlName="startDate"
+        (nzOnOpenChange)="handleStartOpenChange($event)"
+        [nzShowTime]="{ nzFormat: 'HH:mm', nzMinuteStep: 30 }"
+        class="input-item"
+      >
+      </nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzRequired>结束时间</nz-form-label>
+    <nz-form-control [nzSpan]="14" [nzOffset]="1">
+      <nz-date-picker
+        #endDatePicker
+        [nzDisabledDate]="disabledEndDate"
+        nzShowTime
+        nzFormat="yyyy-MM-dd HH:mm"
+        formControlName="endDate"
+        (nzOnOpenChange)="handleEndOpenChange($event)"
+        [nzShowTime]="{ nzFormat: 'HH:mm', nzMinuteStep: 30 }"
+        class="input-item"
+      >
+      </nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzRequired>任务内容</nz-form-label>
+    <nz-form-control [nzSpan]="14" [nzOffset]="1">
+      <textarea
+        nz-input
+        rows="4"
+        formControlName="content"
+        class="input-item"
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzRequired>被指派人</nz-form-label>
+    <nz-form-control [nzSpan]="14" [nzOffset]="1">
+      <nz-select
+        nzPlaceHolder="Assignee"
+        id="select-department"
+        nzAllowClear
+        nzShowSearch
+        nzServerSearch
+        [nzOptionOverflowSize]="5"
+        (nzOpenChange)="onSearch()"
+        formControlName="assigneeId"
+        class="input-item"
+      >
+        <ng-container *ngFor="let o of employees">
+          <nz-option
+            *ngIf="!isLoading"
+            [nzValue]="o.id"
+            [nzLabel]="o.chineseName!"
+          ></nz-option>
+        </ng-container>
+        <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+          <span nz-icon nzType="loading" class="loading-icon"></span>
+          Loading Data...
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <div nz-row nzJustify="center" class="submit">
+    <div nz-col [nzSpan]="6" class="search-area">
+      <nz-space>
+        <button *nzSpaceItem nz-button type="submit" nzType="primary">
+          <span nz-icon nzType="check" nzTheme="outline"></span>提交
+        </button>
+        <button
+          *nzSpaceItem
+          nz-button
+          type="button"
+          nzType="primary"
+          (click)="resetForm()"
+          nzDanger
+        >
+          <span nz-icon nzType="close" nzTheme="outline"></span>取消
+        </button>
+      </nz-space>
+    </div>
+  </div>
+</form>

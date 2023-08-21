@@ -1,0 +1,32 @@
+<div class="title">公司管理系统</div>
+<div nz-row>
+    <div nz-col nzSpan="6" nzOffset="9" class="login-div">
+        <form nz-form [formGroup]="form" class="login-form" (ngSubmit)="login()">
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your eamil or UserName!">
+                    <nz-input-group>
+                        <input type="email" nz-input formControlName="account" placeholder="Email/UserName" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your Password!">
+                    <nz-input-group>
+                        <input type="password" nz-input formControlName="password" placeholder="Password" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <div nz-row class="login-form-margin">
+                <div nz-col [nzSpan]="12">
+                    <label nz-checkbox>
+                        <span>Remember me</span>
+                    </label>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <a class="login-form-forgot">Forgot password</a>
+                </div>
+            </div>
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
+        </form>
+    </div>
+</div>

@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+// @import'~font-awesome/css/font-awesome.css';
+
+.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date {
+    z-index: 1;
+}
+
+/* 去除元素点击时出现的小竖杠 */
+body {
+    -webkit-user-select:none;/*谷歌 /Chrome*/
+	-moz-user-select:none; /*火狐/Firefox*/
+	-ms-user-select:none;    /*IE 10+*/
+	user-select:none;
+}

@@ -1,0 +1,9 @@
+:host ::ng-deep .ant-select-dropdown-menu {
+  /* 限制最大下拉 */
+  max-height: 250px;
+}
+
+:host ::ng-deep .ant-select-selection-placeholder {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

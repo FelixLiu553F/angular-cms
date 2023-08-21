@@ -1,0 +1,4 @@
+<nz-avatar [nzSrc]="imagePath" *ngIf="imagePath" [nzSize]="avatarSize!"></nz-avatar>
+<nz-avatar [nzText]="avatarText" *ngIf="!imagePath && avatarText" [ngStyle]="avatarStyle"
+[nzSize]="avatarSize!"></nz-avatar>
+<nz-avatar nzIcon="user" *ngIf="!imagePath && !avatarText" [nzSize]="avatarSize!"></nz-avatar>

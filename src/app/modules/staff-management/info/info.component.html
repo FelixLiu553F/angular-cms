@@ -1,0 +1,19 @@
+<button type="button" nz-button nzType="default" nzShape="circle" class="onBack" (click)="onBack()">
+    <span nz-icon nzType="close" nzTheme="outline"></span>
+</button>
+<div class="card-container">
+    <nz-tabset nzType="card" [nzAnimated]="true">
+        <nz-tab nzTitle="个人资料">
+            <staff-personal-data [employee]="employee" (isEmployeeChange)="employeeChange($event)"></staff-personal-data>
+        </nz-tab>
+        <!-- <nz-tab nzTitle="账号设置">
+            <staff-account-setting></staff-account-setting>
+        </nz-tab> -->
+        <nz-tab nzTitle="组织架构">
+            <staff-organizational-structure [employee]="employee!"></staff-organizational-structure>
+        </nz-tab>
+        <nz-tab nzTitle="请假列表">
+            <vacation-list [employeeId]="employee?.id"></vacation-list>
+        </nz-tab>
+    </nz-tabset>
+</div>

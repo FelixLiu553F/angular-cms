@@ -1,0 +1,19 @@
+<nz-select [ngModel]="selectedValues" nzMode="multiple">
+  <nz-option
+    *ngFor="let option of options"
+    [nzValue]="option.value"
+    (nzOnSelectionChange)="onOptionChange(option.value, $event)"
+  >
+    {{ option.label }}
+  </nz-option>
+</nz-select>
+
+<div class="select-all-container">
+  <label
+    nz-checkbox
+    [(ngModel)]="allChecked"
+    (ngModelChange)="checkAll($event)"
+  >
+    全选
+  </label>
+</div>

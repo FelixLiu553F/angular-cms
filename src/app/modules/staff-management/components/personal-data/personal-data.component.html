@@ -1,0 +1,259 @@
+<!-- TODO 重构! 写的太垃圾的 全是冗余 -->
+<form nz-form [formGroup]="form!">
+    <nz-form-item>
+        <nz-form-label>
+            用&nbsp; 户&nbsp; ID
+        </nz-form-label>
+        <nz-form-control>
+            {{employee?.account}}
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>
+            账户名称
+        </nz-form-label>
+        <nz-form-control>
+            <div *ngIf="!isChange['accountName']" (mouseenter)="isEdit['accountName'] = true"
+                (mouseleave)="isEdit['accountName'] = false" class="control-div">
+                {{employee?.accountName}}
+                <a (click)="onChange('accountName')" *ngIf="isEdit['accountName']">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    编辑
+                </a>
+            </div>
+            <div *ngIf="isChange['accountName']">
+                <nz-space>
+                    <input *nzSpaceItem type="text" nz-input formControlName="accountName" placeholder="UserName"
+                        class="input-item" />
+                    <button *nzSpaceItem type="submit" title="确定" nz-button nzType="primary"
+                        (click)="onSubmit('accountName')">
+                        <span nz-icon nzType="check" nzTheme="outline"></span>
+                    </button>
+                    <button *nzSpaceItem type="reset" title="取消" nz-button nzType="primary"
+                        (click)="onChange('accountName')">
+                        <span nz-icon nzType="close" nzTheme="outline"></span>
+                    </button>
+                </nz-space>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>
+            用户昵称
+        </nz-form-label>
+        <nz-form-control>
+            <div *ngIf="!isChange['chineseName']" (mouseenter)="isEdit['chineseName'] = true"
+                (mouseleave)="isEdit['chineseName'] = false" class="control-div">
+                {{employee?.chineseName}}
+                <a (click)="onChange('chineseName')" *ngIf="isEdit['chineseName']">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    编辑
+                </a>
+            </div>
+            <div *ngIf="isChange['chineseName']">
+                <nz-space>
+                    <input *nzSpaceItem type="text" nz-input formControlName="chineseName" placeholder="UserName"
+                        class="input-item" />
+                    <button *nzSpaceItem type="submit" title="确定" nz-button nzType="primary"
+                        (click)="onSubmit('chineseName')">
+                        <span nz-icon nzType="check" nzTheme="outline"></span>
+                    </button>
+                    <button *nzSpaceItem type="reset" title="取消" nz-button nzType="primary"
+                        (click)="onChange('chineseName')">
+                        <span nz-icon nzType="close" nzTheme="outline"></span>
+                    </button>
+                </nz-space>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>
+            性&nbsp; &nbsp; &nbsp; &nbsp; 别
+        </nz-form-label>
+        <nz-form-control>
+            <div *ngIf="!isChange['gender']" (mouseenter)="isEdit['gender'] = true"
+                (mouseleave)="isEdit['gender'] = false" class="control-div">
+                {{employee?.gender | genderPipe | undefinedPipe}}
+                <a (click)="onChange('gender')" *ngIf="isEdit['gender']">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    编辑
+                </a>
+            </div>
+            <div *ngIf="isChange['gender']">
+                <nz-space>
+                    <nz-radio-group *nzSpaceItem formControlName="gender" nzName="radiogroup">
+                        <label nz-radio nzValue=1>男</label>
+                        <label nz-radio nzValue=2>女</label>
+                    </nz-radio-group>
+                    <button *nzSpaceItem type="submit" title="确定" nz-button nzType="primary"
+                        (click)="onSubmit('gender')">
+                        <span nz-icon nzType="check" nzTheme="outline"></span>
+                    </button>
+                    <button *nzSpaceItem type="reset" title="取消" nz-button nzType="primary"
+                        (click)="onChange('gender')">
+                        <span nz-icon nzType="close" nzTheme="outline"></span>
+                    </button>
+                </nz-space>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>
+            出生日期
+        </nz-form-label>
+        <nz-form-control>
+            <div *ngIf="!isChange['birth']" (mouseenter)="isEdit['birth'] = true" (mouseleave)="isEdit['birth'] = false"
+                class="control-div">
+                {{employee?.birth | date:'yyyy-MM-dd' | undefinedPipe}}
+                <a (click)="onChange('birth')" *ngIf="isEdit['birth']">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    编辑
+                </a>
+            </div>
+            <div *ngIf="isChange['birth']">
+                <nz-space>
+                    <nz-date-picker *nzSpaceItem formControlName="birth"></nz-date-picker>
+                    <button *nzSpaceItem type="submit" title="确定" nz-button nzType="primary"
+                        (click)="onSubmit('birth')">
+                        <span nz-icon nzType="check" nzTheme="outline"></span>
+                    </button>
+                    <button *nzSpaceItem type="reset" title="取消" nz-button nzType="primary" (click)="onChange('birth')">
+                        <span nz-icon nzType="close" nzTheme="outline"></span>
+                    </button>
+                </nz-space>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+    <div>
+        <!-- 头像 -->
+    </div>
+    <div>
+        <nz-form-item *ngIf="isHR">
+            <nz-form-label>
+                部&nbsp; &nbsp; &nbsp; &nbsp; 门
+            </nz-form-label>
+            <nz-form-control>
+                <nz-form-control>
+                    <div *ngIf="!isChange['departmentId']" (mouseenter)="isEdit['departmentId'] = true"
+                        (mouseleave)="isEdit['departmentId'] = false" class="control-div">
+                        {{employee?.department?.name}}
+                        <a (click)="onChange('departmentId')" *ngIf="isEdit['departmentId']">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            编辑
+                        </a>
+                    </div>
+                    <div *ngIf="isChange['departmentId']">
+                        <nz-space>
+                            <nz-select *nzSpaceItem nzPlaceHolder="Department" id="select-department" nzAllowClear
+                                nzShowSearch nzServerSearch [nzOptionOverflowSize]="5" formControlName="departmentId"
+                                (nzOpenChange)="listOfDepartment.onSearch($event)" class="input-item">
+                                <ng-container *ngFor="let o of listOfDepartment.items">
+                                    <nz-option *ngIf="!listOfDepartment.isLoading" [nzValue]="o.id"
+                                        [nzLabel]="o.name!"></nz-option>
+                                </ng-container>
+                                <nz-option *ngIf="listOfDepartment.isLoading" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
+                            </nz-select>
+                            <button *nzSpaceItem type="submit" title="确定" nz-button nzType="primary"
+                                (click)="onSubmit('departmentId')">
+                                <span nz-icon nzType="check" nzTheme="outline"></span>
+                            </button>
+                            <button *nzSpaceItem type="reset" title="取消" nz-button nzType="primary"
+                                (click)="onChange('departmentId')">
+                                <span nz-icon nzType="close" nzTheme="outline"></span>
+                            </button>
+                        </nz-space>
+                    </div>
+                </nz-form-control>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isHR">
+            <nz-form-label>
+                领&nbsp; &nbsp; &nbsp; &nbsp; 导
+            </nz-form-label>
+            <nz-form-control>
+                <nz-form-control>
+                    <div *ngIf="!isChange['managerId']" (mouseenter)="isEdit['managerId'] = true"
+                        (mouseleave)="isEdit['managerId'] = false" class="control-div">
+                        {{employee?.manager?.accountName}}
+                        <a (click)="onChange('managerId')" *ngIf="isEdit['managerId']">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            编辑
+                        </a>
+                    </div>
+                    <div *ngIf="isChange['managerId']">
+                        <nz-space>
+                            <nz-select *nzSpaceItem nzPlaceHolder="Manager" id="select-manager" nzAllowClear
+                                nzShowSearch nzServerSearch [nzOptionOverflowSize]="5" formControlName="managerId"
+                                (nzOpenChange)="listOfEmployee.onSearch($event)" class="input-item">
+                                <ng-container *ngFor="let o of listOfEmployee.items">
+                                    <nz-option *ngIf="!listOfEmployee.isLoading" [nzValue]="o.id"
+                                        [nzLabel]="o.accountName!"></nz-option>
+                                </ng-container>
+                                <nz-option *ngIf="listOfEmployee.isLoading" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
+                            </nz-select>
+                            <button *nzSpaceItem type="submit" title="确定" nz-button nzType="primary"
+                                (click)="onSubmit('managerId')">
+                                <span nz-icon nzType="check" nzTheme="outline"></span>
+                            </button>
+                            <button *nzSpaceItem type="reset" title="取消" nz-button nzType="primary"
+                                (click)="onChange('managerId')">
+                                <span nz-icon nzType="close" nzTheme="outline"></span>
+                            </button>
+                        </nz-space>
+                    </div>
+                </nz-form-control>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isHR">
+            <nz-form-label>
+                职&nbsp; &nbsp; &nbsp; &nbsp; 位
+            </nz-form-label>
+            <nz-form-control>
+                <nz-form-control>
+                    <div *ngIf="!isChange['positionId']" (mouseenter)="isEdit['positionId'] = true"
+                        (mouseleave)="isEdit['positionId'] = false" class="control-div">
+                        {{employee?.position?.title}}
+                        <a (click)="onChange('positionId')" *ngIf="isEdit['positionId']">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            编辑
+                        </a>
+                    </div>
+                    <div *ngIf="isChange['positionId']">
+                        <nz-space>
+                            <nz-select *nzSpaceItem nzPlaceHolder="Position" id="select-position" nzAllowClear
+                                nzShowSearch nzServerSearch [nzOptionOverflowSize]="5" formControlName="positionId"
+                                (nzOpenChange)="listOfPosition.onSearch($event)" class="input-item">
+                                <ng-container *ngFor="let o of listOfPosition.items">
+                                    <nz-option *ngIf="!listOfPosition.isLoading" [nzValue]="o.id"
+                                        [nzLabel]="o.title!"></nz-option>
+                                </ng-container>
+                                <nz-option *ngIf="listOfPosition.isLoading" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
+                            </nz-select>
+                            <button *nzSpaceItem type="submit" title="确定" nz-button nzType="primary"
+                                (click)="onSubmit('positionId')">
+                                <span nz-icon nzType="check" nzTheme="outline"></span>
+                            </button>
+                            <button *nzSpaceItem type="reset" title="取消" nz-button nzType="primary"
+                                (click)="onChange('positionId')">
+                                <span nz-icon nzType="close" nzTheme="outline"></span>
+                            </button>
+                        </nz-space>
+                    </div>
+                </nz-form-control>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</form>
+<div class="head-portrait ">
+    <f-avatar [imagePath]="employee?.avatar!" [accountName]="employee?.accountName!" [avatarSize]="128"
+        class="avatar"></f-avatar>
+</div>

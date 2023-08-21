@@ -1,0 +1,21 @@
+<div class="calendar" *ngIf="!isTimeSheet">
+  <nz-calendar (nzSelectChange)="selectChange($event)">
+    <ul *nzDateCell="let date" class="events">
+      <ng-container [ngSwitch]="date.getDate()" *ngFor="let item of listDataMap">
+        <ng-container *ngSwitchCase="item.number">
+          <li *ngFor="let item of item.data">
+            <nz-badge [nzStatus]="item.type" [nzText]="item.content"></nz-badge>
+          </li>
+        </ng-container>
+      </ng-container>
+    </ul>
+    <ng-container *nzMonthCell="let month">
+      <div *ngIf="getMonthData(month) as monthData" class="notes-month">
+        <section>{{ monthData }}</section>
+        <span>Backlog number</span>
+      </div>
+    </ng-container>
+  </nz-calendar>
+</div>
+
+<calendar-time-sheet *ngIf="isTimeSheet" [accessDate]="accessDate" (outer)="goBack($event)"></calendar-time-sheet>

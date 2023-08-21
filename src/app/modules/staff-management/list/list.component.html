@@ -1,0 +1,116 @@
+<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" *ngIf="!isInfo">
+    <nz-form-item>
+        <nz-form-control>
+            <nz-input-group>
+                <input formControlName="userName" nz-input placeholder="名字" />
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control>
+            <nz-select nzPlaceHolder="部门" id="select-department" nzAllowClear nzShowSearch nzServerSearch
+                [nzOptionOverflowSize]="5" formControlName="departmentId"
+                (nzOpenChange)="listOfDepartment.onSearch($event)">
+                <ng-container *ngFor="let o of listOfDepartment.items">
+                    <nz-option *ngIf="!listOfDepartment.isLoading" [nzValue]="o.id" [nzLabel]="o.name!"></nz-option>
+                </ng-container>
+                <nz-option *ngIf="listOfDepartment.isLoading" nzDisabled nzCustomContent>
+                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                    Loading Data...
+                </nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control>
+            <nz-select nzPlaceHolder="状态" formControlName="isActive" id="select-active" nzAllowClear>
+                <ng-container *ngFor="let data of staffActiveStaus | keyvalue">
+                    <nz-option [nzValue]="data.value" [nzLabel]="+data.value ? '在职' : '离职'"></nz-option>
+                </ng-container>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control>
+            <nz-space>
+                <button type="reset" nz-button nzType="primary" title="清空" *nzSpaceItem (click)="onReset()">
+                    <span nz-icon nzType="close" nzTheme="outline"></span>
+                </button>
+                <button type="submit" nz-button nzType="primary" title="搜索" *nzSpaceItem (click)="listOfEmployee.onSearch()">
+                    <span nz-icon nzType="search" nzTheme="outline"></span>
+                </button>
+            </nz-space>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="right-btn">
+        <nz-form-control>
+            <nz-space>
+                <!-- <button type="button" nz-button nzType="primary" title="上传" *nzSpaceItem>
+                    <span nz-icon nzType="upload" nzTheme="outline"></span>
+                </button> -->
+                <button type="button" nz-button nzType="primary" title="下载" *nzSpaceItem (click)="listOfEmployee.onExport()" [nzLoading]="modalBusy">
+                    <span nz-icon nzType="download" nzTheme="outline"></span>
+                </button>
+                <button type="button" nz-button nzType="primary" title="添加" *nzSpaceItem (click)="insertOfEmployee.showModal()">
+                    <span nz-icon nzType="user-add" nzTheme="outline"></span>
+                </button>
+            </nz-space>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+<nz-table #basicTable [nzData]="listOfEmployee.items" [nzTotal]="listOfEmployee.totalCount"
+    [(nzPageIndex)]="listOfEmployee.pageIndex" [(nzPageSize)]="listOfEmployee.pageSize"
+    (nzPageIndexChange)="listOfEmployee.pageIndexChange($event)" [nzShowSizeChanger]="true" [nzFrontPagination]="false"
+    (nzPageSizeChange)="listOfEmployee.pageSizeChange($event)" [nzLoading]="listOfEmployee.isLoading" *ngIf="!isInfo"
+    [nzWidthConfig]="widthConfig" [nzScroll]="{ y: '403px' }">
+    <thead>
+        <tr>
+            <th>名称</th>
+            <th>状态</th>
+            <th>邮箱</th>
+            <th>部门</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{data.chineseName}}</td>
+            <td>{{data.isActive ? '在职' : '离职'}}</td>
+            <td>{{data.email}}</td>
+            <td>{{data.department?.name}}</td>
+            <td>
+                <a (click)="onInfo(data)">详情</a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+
+<staff-info *ngIf="isInfo" [employee]="employee" [isChild]="true" (outer)="onBack($event)" (isEmployeeChange)="listEmployee($event)"></staff-info>
+
+<nz-modal [(nzVisible)]="insertOfEmployee.isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="insertOfEmployee.handleCancel()">
+    <ng-template #modalTitle>新增员工</ng-template>
+
+    <ng-template #modalContent>
+        <div class="insert-body">
+            <staff-insert></staff-insert>
+        </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="insertOfEmployee.handleCancel()">取消</button>
+        <button nz-button nzType="primary" (click)="insertOfEmployee.handleOk()"
+            [nzLoading]="insertOfEmployee.isConfirmLoading">确认</button>
+    </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+    (nzOnCancel)="handleCancel()">
+    <ng-template #modalTitle>报表</ng-template>
+    <ng-template #modalContent>
+        {{modal}}
+    </ng-template>
+    <ng-template #modalFooter>
+        <button nz-button nzType="primary" (click)="handleCancel()">确定</button>
+    </ng-template>
+</nz-modal>

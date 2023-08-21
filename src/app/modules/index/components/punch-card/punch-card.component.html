@@ -1,0 +1,37 @@
+<button
+  nz-button
+  nzType="default"
+  *ngIf="isLoading"
+  [nzLoading]="isLoading"
+></button>
+<button
+  title="打卡"
+  nz-button
+  nzType="primary"
+  (click)="punchCard()"
+  *ngIf="!firstAttendanceDate && !isLoading"
+>
+  开始
+</button>
+<button
+  title="打卡"
+  nz-button
+  nzType="primary"
+  disabled
+  *ngIf="
+    firstAttendanceDate && hours + minutes + seconds != '000000' && !isLoading
+  "
+>
+  {{ hours }}:{{ minutes }}:{{ seconds }}
+</button>
+<button
+  title="打卡"
+  nz-button
+  nzType="primary"
+  (click)="punchCard()"
+  *ngIf="
+    firstAttendanceDate && hours + minutes + seconds == '000000' && !isLoading
+  "
+>
+  结束
+</button>

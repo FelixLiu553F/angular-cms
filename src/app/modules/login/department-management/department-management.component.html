@@ -1,0 +1,42 @@
+<nz-table #basicTable [nzData]="list.items">
+  <thead>
+    <tr>
+      <th>序号</th>
+      <th>名称</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.id }}</td>
+      <td>{{ data.name }}</td>
+      <td>
+        <a (click)="onEdit.showModal(data.id!)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="onDelete(data.id!)">删除</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<nz-modal
+  [(nzVisible)]="onEdit.isVisible"
+  nzTitle="The first Modal"
+  (nzOnCancel)="onEdit.handleCancel()"
+  (nzOnOk)="onEdit.handleOk()"
+>
+  <ng-container *nzModalContent>
+    <input nz-input placeholder="name" [(ngModel)]="onEdit.name" />
+  </ng-container>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="onInsert.isVisible"
+  nzTitle="The first Modal"
+  (nzOnCancel)="onInsert.handleCancel()"
+  (nzOnOk)="onInsert.handleOk()"
+>
+  <ng-container *nzModalContent>
+    <input nz-input placeholder="name" [(ngModel)]="onInsert.name" />
+  </ng-container>
+</nz-modal>

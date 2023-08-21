@@ -1,0 +1,98 @@
+<form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">邮箱</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+            <input nz-input formControlName="email" id="email" placeholder="邮箱" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="accountName">账号名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+            <input nz-input formControlName="accountName" id="accountName" placeholder="账号名称" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="chineseName">中文名</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="chineseName" id="chineseName" placeholder="中文名" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="mobile">手机号</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="mobile" id="mobile" placeholder="手机号" />
+        </nz-form-control>
+    </nz-form-item>
+    <!-- <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="gender">Gender</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="gender" id="gender" placeholder="Gender" />
+        </nz-form-control>
+    </nz-form-item> -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="birth">生日</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="birth" id="birth" placeholder="生日" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="positionId">职位</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid Position!">
+            <nz-select nzPlaceHolder="职位" id="select-position" nzAllowClear nzShowSearch nzServerSearch
+                [nzOptionOverflowSize]="5" formControlName="positionId"
+                (nzOpenChange)="listOfPosition.onSearch($event)">
+                <ng-container *ngFor="let o of listOfPosition.items">
+                    <nz-option *ngIf="!listOfPosition.isLoading" [nzValue]="o.id" [nzLabel]="o.title!"></nz-option>
+                </ng-container>
+                <nz-option *ngIf="listOfPosition.isLoading" nzDisabled nzCustomContent>
+                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                    Loading Data...
+                </nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="departmentId">部门</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+            <nz-select nzPlaceHolder="部门" id="select-department" nzAllowClear nzShowSearch nzServerSearch
+                [nzOptionOverflowSize]="5" formControlName="departmentId"
+                (nzOpenChange)="listOfDepartment.onSearch($event)" (ngModelChange)="listOfEmployee.onReset()">
+                <ng-container *ngFor="let o of listOfDepartment.items">
+                    <nz-option *ngIf="!listOfDepartment.isLoading" [nzValue]="o.id" [nzLabel]="o.name!"></nz-option>
+                </ng-container>
+                <nz-option *ngIf="listOfDepartment.isLoading" nzDisabled nzCustomContent>
+                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                    Loading Data...
+                </nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="managerId">领导</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid Manager!">
+            <nz-select nzPlaceHolder="领导" id="select-manager" nzAllowClear nzShowSearch nzServerSearch
+                [nzOptionOverflowSize]="5" formControlName="managerId" (nzOpenChange)="listOfEmployee.onSearch($event)"
+                [nzDisabled]="listOfEmployee.isDisabled">
+                <ng-container *ngFor="let o of listOfEmployee.items">
+                    <nz-option *ngIf="!listOfEmployee.isLoading" [nzValue]="o.id"
+                        [nzLabel]="o.accountName!"></nz-option>
+                </ng-container>
+                <nz-option *ngIf="listOfEmployee.isLoading" nzDisabled nzCustomContent>
+                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                    Loading Data...
+                </nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="avatar">Avatar</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="avatar" id="avatar" placeholder="Avatar" />
+        </nz-form-control>
+    </nz-form-item> -->
+    <!-- <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+            <button type="submit" nz-button nzType="primary">Register</button>
+        </nz-form-control>
+    </nz-form-item> -->
+</form>

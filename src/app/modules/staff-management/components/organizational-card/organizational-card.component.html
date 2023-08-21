@@ -1,0 +1,9 @@
+<div [ngStyle]="ngStyle">
+    <nz-card [nzBodyStyle]="nzBodyStyle">
+        <nz-card-meta [nzTitle]="employee?.accountName!" [nzDescription]="employee?.position?.title!"
+            [nzAvatar]="avatarTemplate"></nz-card-meta>
+    </nz-card>
+</div>
+<ng-template #avatarTemplate>
+    <f-avatar [imagePath]="employee?.avatar!" [accountName]="employee?.accountName!"></f-avatar>
+</ng-template>

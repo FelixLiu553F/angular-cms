@@ -1,0 +1,84 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="200px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a routerLink="/index" target="_blank">
+        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+        <h1>Ant Design Of Angular</h1>
+      </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu nzOpen nzTitle="共同功能" nzIcon="dashboard">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/index">首页</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/vacation/request">请假</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/vacation/list">请假列表</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/calendar/working">工作日历</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/calendar/work-report">工作汇报</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="人事特有功能" nzIcon="form" *ngIf="isHR">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/staff/list">员工管理</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/department/management">部门管理</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/vacation/management">假期管理</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/vacation/approval">请假审批</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="领导特有功能" nzIcon="form" *ngIf="isLeader">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/vacation/approval">请假审批</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/calendar/task">分配任务</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="领导特有功能" nzIcon="form" *ngIf="isTest">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/test">请假审批</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+        </span>
+        <span class="toggle-btn" (click)="clickCardComponent.toggleCard()" #toggleButton>
+          <f-avatar [imagePath]="employee?.avatar!" [accountName]="employee?.accountName!"></f-avatar>
+        </span>
+        <f-click-card [(isCardVisible)]="isCardVisible" [employee]="employee" [onInfo]="onInfo.bind(this)"
+          [logout]="logout.bind(this)" class="card"></f-click-card>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

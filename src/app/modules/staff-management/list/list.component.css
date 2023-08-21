@@ -1,0 +1,29 @@
+::ng-deep .ant-table-tbody tr td {
+    text-align: center;
+}
+
+::ng-deep .ant-table-thead>tr>th {
+    text-align: center;
+}
+
+.ant-form {
+    margin: 16px 0;
+}
+
+.right-btn {
+    position: absolute;
+    right: 48px;
+}
+
+#select-active {
+    width: 75px;
+}
+
+#select-department {
+    width: 139.6px;
+}
+
+.insert-body {
+    height: 50vh;
+    overflow-y: auto;
+}

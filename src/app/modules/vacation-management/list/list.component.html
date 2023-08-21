@@ -1,0 +1,76 @@
+<nz-list class="demo-loadmore-list" [nzLoading]="initLoading" *ngIf="!isInfo">
+  <nz-list-item *ngFor="let item of list">
+    <ng-container *ngIf="!item.loading">
+      <nz-list-item-meta [nzDescription]="item.data.reason">
+        <nz-list-item-meta-title>
+          <nz-tag
+            nzColor="processing"
+            *ngIf="item.data.status == VacationStatusStatus.New"
+            >{{ VacationStatusStatus.New }}</nz-tag
+          >
+          <nz-tag
+            nzColor="processing"
+            *ngIf="item.data.status == VacationStatusStatus.Submitted"
+            >{{ VacationStatusStatus.Submitted }}</nz-tag
+          >
+          <nz-tag
+            nzColor="success"
+            *ngIf="item.data.status == VacationStatusStatus.Approved"
+            >{{ VacationStatusStatus.Approved }}</nz-tag
+          >
+          <nz-tag
+            nzColor="error"
+            *ngIf="item.data.status == VacationStatusStatus.Rejected"
+            >{{ VacationStatusStatus.Rejected }}</nz-tag
+          >
+        </nz-list-item-meta-title>
+      </nz-list-item-meta>
+      <div nz-row class="vacation-item">
+        <div nz-col nzSpan="12">
+          {{ item.data.startDate | date : "yyyy-MM-dd HH:mm" }}
+          <span nz-icon nzType="minus" nzTheme="outline"></span>
+          {{ item.data.endDate | date : "yyyy-MM-dd HH:mm" }}
+        </div>
+        <div
+          nz-col
+          nzSpan="8"
+          nzOffset="4"
+          class="arrow-up"
+          *ngIf="item.data.operateTimes! < 0"
+        >
+          <span nz-icon nzType="arrow-up" nzTheme="outline"></span
+          >{{ -item.data.operateTimes! }}
+        </div>
+        <div
+          nz-col
+          nzSpan="8"
+          nzOffset="4"
+          class="arrow-down"
+          *ngIf="item.data.operateTimes! > 0"
+        >
+          <span nz-icon nzType="arrow-down" nzTheme="outline"></span
+          >{{ item.data.operateTimes }}
+        </div>
+      </div>
+      <ul nz-list-item-actions>
+        <nz-list-item-action
+          ><a (click)="onInfo(item.data)">详情</a></nz-list-item-action
+        >
+      </ul>
+    </ng-container>
+    <nz-skeleton
+      *ngIf="item.loading"
+      [nzAvatar]="true"
+      [nzActive]="true"
+      [nzTitle]="false"
+      [nzLoading]="true"
+    ></nz-skeleton>
+  </nz-list-item>
+  <div class="loadmore" nz-list-load-more>
+    <!-- TODO 升级为滑动到底部自动执行 -->
+    <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">
+      loading more
+    </button>
+  </div>
+</nz-list>
+<vacation-info *ngIf="isInfo" (outer)="onBack($event)" [vacation]="vacation"></vacation-info>

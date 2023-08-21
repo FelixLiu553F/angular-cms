@@ -1,0 +1,36 @@
+
+.info-menu {
+    -webkit-user-select: none;
+    /*谷歌 /Chrome*/
+    -moz-user-select: none;
+    /*火狐/Firefox*/
+    -ms-user-select: none;
+    /*IE 10+*/
+    user-select: none;
+}
+
+.input-item {
+    margin: 0 8px 10px 0;
+    width: 240px;
+    margin-bottom: 10px;
+}
+
+.avatar {
+    position: absolute;
+    top: 184px;
+    right: 256px;
+}
+
+form {
+    margin-left: 64px;
+}
+
+.goBack {
+    float: right;
+    cursor: pointer;
+    transition: all .3s, padding 0s;
+}
+
+.control-div {
+    height: 22px;
+}
